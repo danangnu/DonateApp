@@ -1,16 +1,18 @@
-<nav class="navbar navbar-expand-md navbar-dark fixed-top bg-dark">
+<nav class="navbar navbar-expand-md navbar-dark fixed-top bg-secondary">
     <div class="container">
-        <a class="navbar-brand" href="#">Donate</a>
-        <ul class="navbar-nav mr-auto" *ngIf="accountService.currentUser$ | async">
+        <a class="navbar-brand" routerLink='/' routerLinkActive='active'>Donate</a>
+        <ul class="navbar-nav mr-auto">
             <li class="nav-item">
-                <a class="nav-link" href="#">Food Donor</a>
+                <a class="nav-link" routerLink='/missing' routerLinkActive='active'>Missing Person</a>
             </li>
-            <li class="nav-item">
-                <a class="nav-link" href="#">Missing Person</a>
-            </li>
+            <ng-container *ngIf="accountService.currentUser$ | async">  
+                <li class="nav-item">
+                    <a class="nav-link" routerLink='/messages' routerLinkActive='active'>Inbox</a>
+                </li>
+            </ng-container>
         </ul>
-        <div class="dropdown" *ngIf="accountService.currentUser$ | async" dropdown>
-            <a class="dropdown-toggle text-light" dropdownToggle>Welcome user</a>
+        <div class="dropdown" *ngIf="(accountService.currentUser$ | async) as user" dropdown>
+            <a class="dropdown-toggle text-light" dropdownToggle>Welcome {{user.username | titlecase}}</a>
             <div class="dropdown-menu mt-3" *dropdownMenu>
                 <a class="dropdown-item">Edit Profile</a>
                 <div class="dropdown-divider"></div>
@@ -31,7 +33,7 @@
                 class="form-control mr-sm-2" 
                 type="password" 
                 placeholder="Password">
-            <button class="btn btn-outline-success" type="submit">Login</button>
+            <button class="btn btn-success" type="submit">Login</button>
         </form>
     </div>
 </nav>
