@@ -11,7 +11,8 @@ import { SmsParams } from 'src/app/_models/smsparams';
 })
 export class TestErrorsComponent implements OnInit {
   baseUrl = 'https://localhost:5001/api/'
-  smsmain: Smsmain;
+  validationErrors: string[] = [];
+  //smsmain: Smsmain;
 
   constructor(private http: HttpClient) { }
 
@@ -70,10 +71,11 @@ export class TestErrorsComponent implements OnInit {
   }
 
   get400ValidationError() {
-    this.http.get(this.baseUrl + 'buggy/not-found').subscribe(response => {
+    this.http.post(this.baseUrl + 'account/register', {}).subscribe(response => {
       console.log(response);
     }, error => {
       console.log(error);
+      this.validationErrors = error;
     })
   }
 }
