@@ -1,1 +1,43 @@
-<p>missing-detail works!</p>
+<div class="row" *ngIf="missing">
+    <div class="col-4">
+        <div class="card">
+            <img src="{{missing.photoUrl || './assets/user.png'}}" alt="{{missing.firstName}} {{missing.lastName}}" 
+                class="card-img-top img-thumbnail">
+            <div class="card-body">
+                <div>
+                    <strong>Relation to informer: </strong>
+                    <p>{{missing.relations}}</p>
+                </div>
+                <div>
+                    <strong>Age: </strong>
+                    <p>{{missing.age}}</p>
+                </div>
+                <div>
+                    <strong>Gender: </strong>
+                    <p>{{missing.gender}}</p>
+                </div>
+                <div>
+                    <strong>Missing since: </strong>
+                    <p>{{missing.created}}</p>
+                </div>
+            </div>
+            <div class="card-footer">
+                <div class="btn-group d-flex">
+                    <button class="btn btn-primary">Message Informer</button>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <div class="col-8">
+        <tabset class="member-tabset">
+            <tab heading='Informer'>
+                <p>{{missing.informer.firstName}} {{missing.informer.lastName}}</p>   
+            </tab>  
+            <tab heading='Messages'>
+                <p>Messages go here</p>  
+            </tab>
+        </tabset>
+               
+    </div>
+</div>

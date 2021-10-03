@@ -12,12 +12,12 @@ import { AuthGuard } from './_guards/auth.guard';
 
 const routes: Routes = [
   {path: '', component: HomeComponent},
-  {path: 'missing', component: MissingListComponent},
   {
     path: '',
     runGuardsAndResolvers: 'always',
     canActivate: [AuthGuard],
     children: [
+      {path: 'missing', component: MissingListComponent},
       {path: 'missing/:id', component: MissingDetailComponent},
       {path: 'messages', component: MessagesComponent, canActivate: [AuthGuard]},
     ]

@@ -1,1 +1,5 @@
-<p>missing-list works!</p>
+<div class="row">
+    <div *ngFor="let missing of missings" class="col-2">
+        <app-missing-card [missing]="missing"></app-missing-card>
+    </div>
+</div>
