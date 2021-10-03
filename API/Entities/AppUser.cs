@@ -1,4 +1,5 @@
 using System;
+using System.Collections.Generic;
 using API.Extensions;
 
 namespace API.Entities
@@ -17,10 +18,11 @@ namespace API.Entities
         public string Gender { get; set; }
         public string City { get; set; }
         public string State { get; set; }
+        public ICollection<Missing> Missings { get; set; }
 
-        public int GetAge()
-        {
-            return DateOfBirth.CalculateAge();
-        }
+        //public int GetAge()
+        //{
+        //    return DateOfBirth.CalculateAge();
+        //}
     }
 }

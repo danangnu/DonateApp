@@ -122,7 +122,7 @@ namespace API.Data.Migrations
             modelBuilder.Entity("API.Entities.Missing", b =>
                 {
                     b.HasOne("API.Entities.AppUser", "AppUser")
-                        .WithMany()
+                        .WithMany("Missings")
                         .HasForeignKey("AppUserId")
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
@@ -139,6 +139,11 @@ namespace API.Data.Migrations
                         .IsRequired();
 
                     b.Navigation("Missing");
+                });
+
+            modelBuilder.Entity("API.Entities.AppUser", b =>
+                {
+                    b.Navigation("Missings");
                 });
 
             modelBuilder.Entity("API.Entities.Missing", b =>
