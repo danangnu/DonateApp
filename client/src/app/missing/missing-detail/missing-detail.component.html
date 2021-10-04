@@ -5,6 +5,10 @@
                 class="card-img-top img-thumbnail">
             <div class="card-body">
                 <div>
+                    <strong>Name: </strong>
+                    <p>{{missing.firstName}} {{missing.lastName}}</p>
+                </div>
+                <div>
                     <strong>Relation to informer: </strong>
                     <p>{{missing.relations}}</p>
                 </div>
@@ -32,8 +36,30 @@
     <div class="col-8">
         <tabset class="member-tabset">
             <tab heading='Informer'>
-                <p>{{missing.informer.firstName}} {{missing.informer.lastName}}</p>   
+                <div>
+                    <strong>Name: </strong>
+                    <p>{{missing.informer.firstName}} {{missing.informer.lastName}}</p>
+                </div>
+                <div>
+                    <strong>Age: </strong>
+                    <p>{{missing.informer.age}}</p>
+                </div>
+                <div>
+                    <strong>Gender: </strong>
+                    <p>{{missing.informer.gender}}</p>
+                </div>
+                <div>
+                    <strong>Address: </strong>
+                    <p>{{missing.informer.city}}, {{missing.informer.state}}</p>  
+                </div> 
+                <div>
+                    <strong>Last Active: </strong>
+                    <p>{{missing.informer.lastActive}}</p>
+                </div>
             </tab>  
+            <tab heading='Photos'>
+                <ngx-gallery [options]="galleryOptions" [images]="galleryImages" style="display: inline-block; margin-bottom: 20px;"></ngx-gallery>
+            </tab>
             <tab heading='Messages'>
                 <p>Messages go here</p>  
             </tab>
