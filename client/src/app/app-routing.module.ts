@@ -5,6 +5,7 @@ import { ServerErrorComponent } from './errors/server-error/server-error.compone
 import { TestErrorsComponent } from './errors/test-errors/test-errors.component';
 import { HomeComponent } from './home/home.component';
 import { ListsComponent } from './lists/lists.component';
+import { MemberEditComponent } from './members/member-edit/member-edit.component';
 import { MessagesComponent } from './messages/messages.component';
 import { MissingDetailComponent } from './missing/missing-detail/missing-detail.component';
 import { MissingListComponent } from './missing/missing-list/missing-list.component';
@@ -17,9 +18,10 @@ const routes: Routes = [
     runGuardsAndResolvers: 'always',
     canActivate: [AuthGuard],
     children: [
+      {path: 'member/edit', component: MemberEditComponent},
       {path: 'missing', component: MissingListComponent},
       {path: 'missing/:id', component: MissingDetailComponent},
-      {path: 'messages', component: MessagesComponent, canActivate: [AuthGuard]},
+      {path: 'messages', component: MessagesComponent},
     ]
   },
   {path: 'errors', component: TestErrorsComponent},
