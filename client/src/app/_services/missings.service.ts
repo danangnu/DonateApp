@@ -18,4 +18,8 @@ export class MissingsService {
   getMissing(id: string) {
     return this.http.get<Missing>(this.baseUrl + 'missing/' + id);
   }
+
+  updateMissing(missing: Missing) {
+    return this.http.put(this.baseUrl + 'missing', missing);
+  }
 }

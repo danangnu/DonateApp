@@ -1,4 +1,5 @@
 using System.Collections.Generic;
+using System.Security.Claims;
 using System.Threading.Tasks;
 using API.DTOs;
 using API.Entities;
@@ -32,6 +33,20 @@ namespace API.Controllers
         public async Task<ActionResult<MissingDto>> GetMissing(int id)
         {
             return await _missingRepository.GetMissingByIdAsync(id);
+        }
+
+        [HttpPut]
+        public async Task<ActionResult> UpdateMissing(MissingUpdateDto missingUpdateDto)
+        {
+            var missing = await _missingRepository.GetMissingsByIdAsync(missingUpdateDto.Id);
+
+            _mapper.Map(missingUpdateDto, missing);
+
+            _missingRepository.Update(missing);
+
+            if (await _missingRepository.SaveAllAsync()) return NoContent();
+
+            return BadRequest("Failed to update Missing Person");
         }
     }
 }

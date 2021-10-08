@@ -11,5 +11,7 @@ namespace API.Interfaces
          Task<bool> SaveAllAsync();
          Task<IEnumerable<MissingDto>> GetMissingsAsync();
          Task<MissingDto> GetMissingByIdAsync(int id);
+
+         Task<Missing> GetMissingsByIdAsync(int id);
     }
 }

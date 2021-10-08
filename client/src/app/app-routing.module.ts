@@ -10,6 +10,7 @@ import { MissingDetailComponent } from './missing/missing-detail/missing-detail.
 import { MissingEditComponent } from './missing/missing-edit/missing-edit.component';
 import { MissingListComponent } from './missing/missing-list/missing-list.component';
 import { AuthGuard } from './_guards/auth.guard';
+import { PreventUnsavedChangesGuard } from './_guards/prevent-unsaved-changes.guard';
 
 const routes: Routes = [
   {path: '', component: HomeComponent},
@@ -18,10 +19,10 @@ const routes: Routes = [
     runGuardsAndResolvers: 'always',
     canActivate: [AuthGuard],
     children: [
-      {path: 'member/edit', component: MemberEditComponent},
+      {path: 'member/edit', component: MemberEditComponent, canDeactivate: [PreventUnsavedChangesGuard]},
       {path: 'missing', component: MissingListComponent},
       {path: 'missing/:id', component: MissingDetailComponent},
-      {path: 'missings/:id', component: MissingEditComponent},
+      {path: 'missings/:id', component: MissingEditComponent, canDeactivate: [PreventUnsavedChangesGuard]},
       {path: 'messages', component: MessagesComponent},
     ]
   },

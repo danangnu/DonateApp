@@ -35,6 +35,11 @@ namespace API.Data
                 .ToListAsync();
         }
 
+        public async Task<Missing> GetMissingsByIdAsync(int id)
+        {
+            return await _context.Missing.FindAsync(id);
+        }
+
         public async Task<bool> SaveAllAsync()
         {
             return await _context.SaveChangesAsync() > 0;
