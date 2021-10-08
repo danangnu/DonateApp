@@ -4,10 +4,10 @@ import { NotFoundComponent } from './errors/not-found/not-found.component';
 import { ServerErrorComponent } from './errors/server-error/server-error.component';
 import { TestErrorsComponent } from './errors/test-errors/test-errors.component';
 import { HomeComponent } from './home/home.component';
-import { ListsComponent } from './lists/lists.component';
 import { MemberEditComponent } from './members/member-edit/member-edit.component';
 import { MessagesComponent } from './messages/messages.component';
 import { MissingDetailComponent } from './missing/missing-detail/missing-detail.component';
+import { MissingEditComponent } from './missing/missing-edit/missing-edit.component';
 import { MissingListComponent } from './missing/missing-list/missing-list.component';
 import { AuthGuard } from './_guards/auth.guard';
 
@@ -21,6 +21,7 @@ const routes: Routes = [
       {path: 'member/edit', component: MemberEditComponent},
       {path: 'missing', component: MissingListComponent},
       {path: 'missing/:id', component: MissingDetailComponent},
+      {path: 'missings/:id', component: MissingEditComponent},
       {path: 'messages', component: MessagesComponent},
     ]
   },

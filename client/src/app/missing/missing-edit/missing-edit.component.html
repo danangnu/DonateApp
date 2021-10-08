@@ -1,0 +1,56 @@
+<div class="row" *ngIf="missing">
+    <div class="col-4">
+        <h1>{{missing.firstName}}'s Profile</h1>
+    </div>
+    <div class="col-8">
+        <div class="alert alert-info">
+            <p><strong>Information: </strong> You have made changes. Any unsaved changes will be lost</p>
+        </div>
+    </div>
+    <div class="col-4">
+        <div class="card">
+            <img src="{{missing.photoUrl || './assets/user.png'}}" alt="{{missing.firstName}} {{missing.lastName}}" 
+                class="card-img-top img-thumbnail">
+            <div class="card-body">
+                <form>
+                    <div>
+                        <strong for="lastName">Last Name: </strong>
+                        <input [(ngModel)]="missing.lastName" type="text" name="lastName" class="form-control">
+                    </div>
+                    <div class="mt-1">
+                        <strong for="firstName">First Name: </strong>
+                        <input [(ngModel)]="missing.firstName" type="text" name="firstName" class="form-control">
+                    </div>
+                    <div class="mt-1">
+                        <strong for="relations">Relation to you: </strong>
+                        <input [(ngModel)]="missing.relations" type="text" name="relations" class="form-control">
+                    </div>
+                </form>
+                <div>
+                    <strong>Age: </strong>
+                    <p>{{missing.age}}</p>
+                </div>
+                <div>
+                    <strong>Gender: </strong>
+                    <p>{{missing.gender}}</p>
+                </div>
+                <div>
+                    <strong>Missing since: </strong>
+                    <p>{{missing.created}}</p>
+                </div>
+            </div>
+            <div class="card-footer">
+                <button class="btn btn-success btn-block">Save Changes</button>
+            </div>
+        </div>
+    </div>
+
+    <div class="col-8">
+        <tabset class="member-tabset"> 
+            <tab heading='Edit Photos'>
+                <p>Photo edit will go here</p>
+            </tab>
+        </tabset>
+               
+    </div>
+</div>
