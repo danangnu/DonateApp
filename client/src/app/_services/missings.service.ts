@@ -38,4 +38,12 @@ export class MissingsService {
       })
     );
   }
+
+  setMainPhoto(photoId: number) {
+    return this.http.put(this.baseUrl + 'missing/set-main-photo/' + photoId, {});
+  }
+
+  deletePhoto(photoId: number) {
+    return this.http.delete(this.baseUrl + 'missing/delete-photo/' + photoId);
+  }
 }

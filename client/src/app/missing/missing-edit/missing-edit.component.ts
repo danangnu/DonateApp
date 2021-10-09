@@ -4,7 +4,6 @@ import { ActivatedRoute } from '@angular/router';
 import { ToastrService } from 'ngx-toastr';
 import { take } from 'rxjs/operators';
 import { Missing } from 'src/app/_models/missing';
-import { User } from 'src/app/_models/user';
 import { AccountService } from 'src/app/_services/account.service';
 import { MissingsService } from 'src/app/_services/missings.service';
 

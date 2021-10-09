@@ -35,9 +35,19 @@ namespace API.Data
                 .ToListAsync();
         }
 
+        public async Task<MissingDto> GetMissingByUsernameAsync(string username)
+        {
+            return await _context.Missing
+                .Where(x => x.AppUser.UserName == username)
+                .ProjectTo<MissingDto>(_mapper.ConfigurationProvider)
+                .SingleOrDefaultAsync();
+
+        }
         public async Task<Missing> GetMissingsByIdAsync(int id)
         {
-            return await _context.Missing.FindAsync(id);
+            return await _context.Missing
+                .Include(p => p.Photos)
+                .SingleOrDefaultAsync(x => x.Id == id);
         }
 
         public async Task<bool> SaveAllAsync()
