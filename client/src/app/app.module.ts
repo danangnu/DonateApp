@@ -1,7 +1,7 @@
 import { NgModule } from '@angular/core';
 import { BrowserModule } from '@angular/platform-browser';
 import { HttpClientModule, HTTP_INTERCEPTORS } from '@angular/common/http';
-import { FormsModule } from '@angular/forms';
+import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { NgxSpinnerModule } from 'ngx-spinner';
 
 import { AppRoutingModule } from './app-routing.module';
@@ -34,7 +34,7 @@ import { PhotoEditorComponent } from './missing/photo-editor/photo-editor.compon
     RegisterComponent,
     MissingListComponent,
     MissingDetailComponent,
-    MessagesComponent,
+    MessagesComponent,  
     ListsComponent,
     TestErrorsComponent,
     NotFoundComponent,
@@ -50,6 +50,7 @@ import { PhotoEditorComponent } from './missing/photo-editor/photo-editor.compon
     HttpClientModule,
     BrowserAnimationsModule,
     FormsModule,
+    ReactiveFormsModule,
     SharedModule,
     NgxSpinnerModule
   ],
