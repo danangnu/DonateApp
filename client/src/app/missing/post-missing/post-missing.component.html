@@ -1,0 +1,34 @@
+<div class="row justify-content-center">
+    <div class="col-10">
+        <form [formGroup]='registerForm' (ngSubmit)="registerForm.valid && register()" autocomplete="off">
+            <h2 class="text-center text-primary">Add Missing Person</h2>
+            <hr>
+            <div class="form-group">
+                <label class="control-label" style="margin-right: 10px;">Gender: </label>
+                <label class="radio-inline">
+                    <input type="radio" value='Male' formControlName='gender'> Male
+                </label>
+                <label class="radio-inline">
+                    <input type="radio" value='Female' formControlName='gender' class="ml-3"> Female
+                </label>
+            </div>
+            <app-text-input [formControl]='registerForm.controls["firstName"]' [label]='"First Name"'></app-text-input>
+            <app-text-input [formControl]='registerForm.controls["lastName"]' [label]='"Last Name"'></app-text-input>
+            <app-date-input [formControl]='registerForm.controls["dateOfBirth"]' 
+                [label]='"Date Of Birth"' [maxDate]='maxDate'></app-date-input>
+            <app-text-input [formControl]='registerForm.controls["relations"]' [label]='"Relation To You"'></app-text-input>
+        
+            <div class="row" *ngIf="validationErrors.length > 0">
+                <ul class="text-danger">
+                    <li *ngFor="let error of validationErrors">
+                        {{error}}
+                    </li>
+                </ul>
+            </div>
+            <div class="form-group text-center">
+                <button [disabled]='!registerForm.valid' class="btn btn-success mr-2" type="submit">Register</button>
+                <button class="btn btn-default mr-2" (click)="bsModalRef.hide()" type="button">Cancel</button>
+            </div>
+        </form>
+    </div>
+</div>

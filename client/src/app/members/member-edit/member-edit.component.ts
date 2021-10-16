@@ -1,7 +1,10 @@
 import { Component, HostListener, OnInit, ViewChild } from '@angular/core';
 import { NgForm } from '@angular/forms';
+import { BsModalRef, BsModalService } from 'ngx-bootstrap/modal';
 import { ToastrService } from 'ngx-toastr';
 import { take } from 'rxjs/operators';
+import { PostMissingComponent } from 'src/app/missing/post-missing/post-missing.component';
+import { RegisterComponent } from 'src/app/register/register.component';
 import { Member } from 'src/app/_models/member';
 import { Missing } from 'src/app/_models/missing';
 import { User } from 'src/app/_models/user';
@@ -14,17 +17,20 @@ import { MemberService } from 'src/app/_services/member.service';
   styleUrls: ['./member-edit.component.css']
 })
 export class MemberEditComponent implements OnInit {
+  postMode = false;
   @ViewChild('editForm') editForm: NgForm;
   member: Member;
   missings: Missing[];
   user: User;
+  bsModalRef: BsModalRef;
   @HostListener('window:beforeunload', ['$event']) unloadNotification($event: any) {
     if (this.editForm.dirty) {
       $event.returnValue = true;
     }
   }
 
-  constructor(private accountService: AccountService, private memberService: MemberService, private toastr: ToastrService) {
+  constructor(private accountService: AccountService, private memberService: MemberService, 
+    private toastr: ToastrService, private modalService: BsModalService) {
     this.accountService.currentUser$.pipe(take(1)).subscribe(user => this.user = user);
    }
 
@@ -44,5 +50,13 @@ export class MemberEditComponent implements OnInit {
       this.toastr.success('Profile updated successfully');
       this.editForm.reset(this.member);
     });
+  }
+
+  postToggle() {
+    this.bsModalRef = this.modalService.show(PostMissingComponent);
+  }
+
+  cancelPostMode(event: boolean) {
+    this.postMode = event;
   }
 }

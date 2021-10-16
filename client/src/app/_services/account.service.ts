@@ -36,6 +36,16 @@ export class AccountService {
     )
   }
 
+  postMissing(model: any) {
+    return this.http.post(this.baseUrl + 'account/post-missing', model).pipe(
+      map((user: User) => {
+        if (user) {
+          this.setCurrentUser(user);
+        }
+      })
+    )
+  }
+
   setCurrentUser(user: User) {
     localStorage.setItem('user', JSON.stringify(user));
     this.currentUserSource.next(user);

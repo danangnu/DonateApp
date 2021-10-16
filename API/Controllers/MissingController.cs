@@ -84,7 +84,7 @@ namespace API.Controllers
 
             if (await _missingRepository.SaveAllAsync())
             {
-                return CreatedAtRoute("GetMissing", new {id = id}, _mapper.Map<PhotoDto>(photo));
+                return CreatedAtRoute("GetMissing", new { id = id }, _mapper.Map<PhotoDto>(photo));
             }
 
             return BadRequest("Problem Adding Photo");

@@ -9,6 +9,7 @@ import { MessagesComponent } from './messages/messages.component';
 import { MissingDetailComponent } from './missing/missing-detail/missing-detail.component';
 import { MissingEditComponent } from './missing/missing-edit/missing-edit.component';
 import { MissingListComponent } from './missing/missing-list/missing-list.component';
+import { PostMissingComponent } from './missing/post-missing/post-missing.component';
 import { AuthGuard } from './_guards/auth.guard';
 import { PreventUnsavedChangesGuard } from './_guards/prevent-unsaved-changes.guard';
 
@@ -29,6 +30,7 @@ const routes: Routes = [
   {path: 'errors', component: TestErrorsComponent},
   {path: 'not-found', component: NotFoundComponent},
   {path: 'server-error', component: ServerErrorComponent},
+  {path: 'post-missing', component: PostMissingComponent},
   {path: '**', component: NotFoundComponent, pathMatch: 'full'},
 ];
 

@@ -48,6 +48,26 @@ namespace API.Controllers
             };
         }
 
+        [HttpPost("post-missing")]
+        public async Task<ActionResult<MissingDto>> PostMissing(PostMissingDto postMissingDto)
+        {
+            var missing = _mapper.Map<Missing>(postMissingDto);
+
+            _context.Missing.Add(missing);
+
+            await _context.SaveChangesAsync();
+
+            return new MissingDto
+            {
+                Id = missing.Id,
+                LastName = missing.LastName,
+                FirstName = missing.FirstName,
+                Age = missing.GetAge(),
+                Gender = missing.Gender,
+                Relations = missing.Relations
+            };
+        }
+
         [HttpPost("login")]
         public async Task<ActionResult<UserDto>> Login(LoginDto loginDto)
         {
@@ -67,6 +87,7 @@ namespace API.Controllers
             return new UserDto
             {
                 Username = user.UserName,
+                Id = user.Id,
                 FirstName = user.FirstName,
                 LastName = user.LastName,
                 Token = _tokenService.CreateToken(user)
