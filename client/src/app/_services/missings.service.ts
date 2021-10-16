@@ -30,6 +30,12 @@ export class MissingsService {
     return this.http.get<Missing>(this.baseUrl + 'missing/' + id);
   }
 
+  postMissing(model: any) {
+    return this.http.post(this.baseUrl + 'account/post-missing', model).pipe(
+      this.missings = null
+    );
+  }
+
   updateMissing(missing: Missing) {
     return this.http.put(this.baseUrl + 'missing', missing).pipe(
       map(() => {

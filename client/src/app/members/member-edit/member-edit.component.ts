@@ -1,4 +1,4 @@
-import { Component, HostListener, OnInit, ViewChild } from '@angular/core';
+import { Component, HostListener, OnInit, TemplateRef, ViewChild } from '@angular/core';
 import { NgForm } from '@angular/forms';
 import { BsModalRef, BsModalService } from 'ngx-bootstrap/modal';
 import { ToastrService } from 'ngx-toastr';
@@ -23,6 +23,7 @@ export class MemberEditComponent implements OnInit {
   missings: Missing[];
   user: User;
   bsModalRef: BsModalRef;
+  message:string;
   @HostListener('window:beforeunload', ['$event']) unloadNotification($event: any) {
     if (this.editForm.dirty) {
       $event.returnValue = true;
@@ -52,11 +53,17 @@ export class MemberEditComponent implements OnInit {
     });
   }
 
-  postToggle() {
-    this.bsModalRef = this.modalService.show(PostMissingComponent);
+  postToggle(template: TemplateRef<any>) {
+    this.bsModalRef = this.modalService.show(template, { id: 1, class: 'modal-lg' });
   }
 
-  cancelPostMode(event: boolean) {
-    this.postMode = event;
+  receiveMessage($event) {
+    this.message = $event;
+    this.editForm.reset(this.member);
+    this.modalService.hide(1);
+  }
+
+  closeModal(modalId?: number){
+    this.modalService.hide(modalId);
   }
 }

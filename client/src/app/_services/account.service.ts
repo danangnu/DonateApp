@@ -3,6 +3,7 @@ import { Injectable } from '@angular/core';
 import { ReplaySubject } from 'rxjs';
 import { map } from 'rxjs/operators';
 import { environment } from 'src/environments/environment';
+import { Missing } from '../_models/missing';
 import { User } from '../_models/user';
 
 @Injectable({
@@ -28,16 +29,6 @@ export class AccountService {
 
   register(model: any) {
     return this.http.post(this.baseUrl + 'account/register', model).pipe(
-      map((user: User) => {
-        if (user) {
-          this.setCurrentUser(user);
-        }
-      })
-    )
-  }
-
-  postMissing(model: any) {
-    return this.http.post(this.baseUrl + 'account/post-missing', model).pipe(
       map((user: User) => {
         if (user) {
           this.setCurrentUser(user);
