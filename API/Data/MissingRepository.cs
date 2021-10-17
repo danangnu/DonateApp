@@ -3,6 +3,7 @@ using System.Linq;
 using System.Threading.Tasks;
 using API.DTOs;
 using API.Entities;
+using API.Helpers;
 using API.Interfaces;
 using AutoMapper;
 using AutoMapper.QueryableExtensions;
@@ -28,11 +29,12 @@ namespace API.Data
                 .SingleOrDefaultAsync();
         }
 
-        public async Task<IEnumerable<MissingDto>> GetMissingsAsync()
+        public async Task<PagedList<MissingDto>> GetMissingsAsync(UserParams userParams)
         {
-            return await _context.Missing
+            var query = _context.Missing
                 .ProjectTo<MissingDto>(_mapper.ConfigurationProvider)
-                .ToListAsync();
+                .AsNoTracking();
+            return await PagedList<MissingDto>.CreateAsync(query, userParams.PageNumber, userParams.PageSize);
         }
 
         public async Task<MissingDto> GetMissingByUsernameAsync(string username)

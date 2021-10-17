@@ -5,6 +5,7 @@ using System.Threading.Tasks;
 using API.DTOs;
 using API.Entities;
 using API.Extensions;
+using API.Helpers;
 using API.Interfaces;
 using AutoMapper;
 using Microsoft.AspNetCore.Authorization;
@@ -27,9 +28,11 @@ namespace API.Controllers
         }
 
         [HttpGet]
-        public async Task<ActionResult<IEnumerable<MissingDto>>> GetMissings()
+        public async Task<ActionResult<IEnumerable<MissingDto>>> GetMissings([FromQuery]UserParams userParams)
         {
-            var missings = await _missingRepository.GetMissingsAsync();
+            var missings = await _missingRepository.GetMissingsAsync(userParams);
+
+            Response.AddPaginationHeader(missings.CurrentPage, missings.PageSize, missings.TotalCount, missings.TotalPages);
 
             return Ok(missings);
         }

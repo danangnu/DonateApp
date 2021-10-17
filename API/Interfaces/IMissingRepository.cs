@@ -2,6 +2,7 @@ using System.Collections.Generic;
 using System.Threading.Tasks;
 using API.DTOs;
 using API.Entities;
+using API.Helpers;
 
 namespace API.Interfaces
 {
@@ -9,7 +10,7 @@ namespace API.Interfaces
     {
          void Update(Missing missing);
          Task<bool> SaveAllAsync();
-         Task<IEnumerable<MissingDto>> GetMissingsAsync();
+         Task<PagedList<MissingDto>> GetMissingsAsync(UserParams userParams);
          Task<MissingDto> GetMissingByIdAsync(int id);
          Task<MissingDto> GetMissingByUsernameAsync(string username);
 
