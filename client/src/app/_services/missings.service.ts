@@ -24,6 +24,7 @@ export class MissingsService {
 
     params = params.append('minAge', userParams.minAge.toString());
     params = params.append('maxAge', userParams.maxAge.toString());
+    params = params.append('orderBy', userParams.orderBy);
     
     return this.getPaginatedResult<Missing[]>(this.baseUrl + 'missing', params);
   }
