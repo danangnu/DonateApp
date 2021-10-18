@@ -1,3 +1,4 @@
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
@@ -31,10 +32,18 @@ namespace API.Data
 
         public async Task<PagedList<MissingDto>> GetMissingsAsync(UserParams userParams)
         {
-            var query = _context.Missing
-                .ProjectTo<MissingDto>(_mapper.ConfigurationProvider)
-                .AsNoTracking();
-            return await PagedList<MissingDto>.CreateAsync(query, userParams.PageNumber, userParams.PageSize);
+            var query = _context.Missing.AsQueryable();
+
+            if (!string.IsNullOrEmpty(userParams.Gender))
+                query = query.Where(u => u.Gender == userParams.Gender);
+
+            var minDob = DateTime.Today.AddYears(-userParams.MaxAge - 1);
+            var maxDob = DateTime.Today.AddYears(-userParams.MinAge);
+
+            query = query.Where(u => u.DateOfBirth >= minDob && u.DateOfBirth <= maxDob);
+        
+            return await PagedList<MissingDto>.CreateAsync(query.ProjectTo<MissingDto>(_mapper.ConfigurationProvider).AsNoTracking(), 
+                userParams.PageNumber, userParams.PageSize);
         }
 
         public async Task<MissingDto> GetMissingByUsernameAsync(string username)

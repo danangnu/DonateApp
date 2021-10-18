@@ -5,6 +5,7 @@ import { map } from 'rxjs/operators';
 import { environment } from 'src/environments/environment';
 import { Missing } from '../_models/missing';
 import { PaginatedResult } from '../_models/pagination';
+import { UserParams } from '../_models/userParams';
 
 @Injectable({
   providedIn: 'root'
@@ -12,27 +13,41 @@ import { PaginatedResult } from '../_models/pagination';
 export class MissingsService {
   baseUrl= environment.apiUrl;
   missings: Missing[] = [];
-  paginatedResult: PaginatedResult<Missing[]> = new PaginatedResult<Missing[]>();
 
   constructor(private http: HttpClient) { }
 
-  getMissings(page?: number, itemsPerPage?: number) {
-    let params = new HttpParams();
+  getMissings(userParams: UserParams) {
+    let params = this.getPaginationHeaders(userParams.pageNumber, userParams.pageSize);
 
-    if (page !== null && itemsPerPage !== null) {
-      params = params.append('pageNumber', page.toString());
-      params = params.append('pageSize', itemsPerPage.toString());
-    }
+    if (userParams.gender !== undefined && userParams.gender !== null)
+      params = params.append('gender', userParams.gender);
 
-    return this.http.get<Missing[]>(this.baseUrl + 'missing', {observe: 'response', params}).pipe(
+    params = params.append('minAge', userParams.minAge.toString());
+    params = params.append('maxAge', userParams.maxAge.toString());
+    
+    return this.getPaginatedResult<Missing[]>(this.baseUrl + 'missing', params);
+  }
+
+  private getPaginatedResult<T>(url, params) {
+    const paginatedResult: PaginatedResult<T> = new PaginatedResult<T>();
+    return this.http.get<T>(url, { observe: 'response', params }).pipe(
       map(response => {
-        this.paginatedResult.result = response.body;
+        paginatedResult.result = response.body;
         if (response.headers.get('Pagination') !== null) {
-          this.paginatedResult.pagination = JSON.parse(response.headers.get('Pagination'));
+          paginatedResult.pagination = JSON.parse(response.headers.get('Pagination'));
         }
-        return this.paginatedResult;
+        return paginatedResult;
       })
     );
+  }
+
+  private getPaginationHeaders(pageNumber: number, pageSize: number) {
+    let params = new HttpParams();
+
+    params = params.append('pageNumber', pageNumber.toString());
+    params = params.append('pageSize', pageSize.toString());
+    
+    return params;
   }
 
   getMissing(id: string) {
