@@ -18,7 +18,7 @@ export class MissingListComponent implements OnInit {
   genderList = [{value: 'Male', display: 'Males'}, {value: 'Female', display: 'Females'}]
 
   constructor(private missingService: MissingsService) {
-    this.userParams = new UserParams();
+    this.userParams = this.missingService.getUserParams();
    }
 
   ngOnInit(): void {
@@ -26,6 +26,7 @@ export class MissingListComponent implements OnInit {
   }
 
   loadMissings() {
+    this.missingService.setUserParams(this.userParams);
     this.missingService.getMissings(this.userParams).subscribe(response => {
       this.missing = response.result;
       this.pagination = response.pagination;
@@ -33,19 +34,20 @@ export class MissingListComponent implements OnInit {
   }
 
   resetFilters() {
-    this.userParams = new UserParams();
+    this.userParams = this.missingService.resetUserParams();
     this.loadMissings();
-    this.filterMode = !this.filterMode;
-    console.log(this.filterMode);
+    this.filterMode = false;
+    //console.log(this.filterMode);
   }
 
   filtersMode() {
     this.filterMode = true;
-    console.log(this.filterMode);
+    //console.log(this.filterMode);
   }
 
   pageChanged(event: any) {
     this.userParams.pageNumber = event.page;
+    this.missingService.setUserParams(this.userParams);
     this.loadMissings();
   }
 }
