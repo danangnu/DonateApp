@@ -19,10 +19,6 @@ namespace API.Entities
         public string City { get; set; }
         public string State { get; set; }
         public ICollection<Missing> Missings { get; set; }
-
-        //public int GetAge()
-        //{
-        //    return DateOfBirth.CalculateAge();
-        //}
+        public ICollection<UserLike> LikedMissings { get; set; }
     }
 }

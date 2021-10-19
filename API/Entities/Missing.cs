@@ -16,6 +16,7 @@ namespace API.Entities
         public string Gender { get; set; }
         public string Relations { get; set; }
         public ICollection<Photo> Photos { get; set; }
+        public ICollection<UserLike> LikedByUsers { get; set; }
 
         public int GetAge()
         {
