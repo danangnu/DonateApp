@@ -56,6 +56,14 @@ export class MissingsService {
 
   }
 
+  addLike(id: number) {
+    return this.http.post(this.baseUrl + 'likes/' + id, {});
+  }
+
+  getLikes(predicate: string) {
+    return this.http.get<Partial<Missing[]>>(this.baseUrl + 'likes?predicate=' + predicate);
+  }
+
   private getPaginatedResult<T>(url, params) {
     const paginatedResult: PaginatedResult<T> = new PaginatedResult<T>();
     return this.http.get<T>(url, { observe: 'response', params }).pipe(

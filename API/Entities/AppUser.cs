@@ -20,5 +20,6 @@ namespace API.Entities
         public string State { get; set; }
         public ICollection<Missing> Missings { get; set; }
         public ICollection<UserLike> LikedMissings { get; set; }
+        public ICollection<UserLike> LikedByUsers { get; set; }
     }
 }
