@@ -4,6 +4,7 @@ using System.Threading.Tasks;
 using API.DTOs;
 using API.Entities;
 using API.Extensions;
+using API.Helpers;
 using API.Interfaces;
 using Microsoft.EntityFrameworkCore;
 
@@ -29,20 +30,21 @@ namespace API.Data
             return await _context.Likes.FindAsync(sourceUserId,likedMissingId);
         }
 
-        public async Task<IEnumerable<LikeDto>> GetUserLikes(string predicate, int Id)
+        public async Task<PagedList<LikeDto>> GetUserLikes(LikesParams likesParams)
         {
             var users = _context.Users.OrderBy(u => u.UserName).AsQueryable();
             var likes = _context.Likes.AsQueryable();
             var missings = _context.Missing.AsQueryable();
-            List<LikeDto> likeDto = new List<LikeDto>();
+            var liked = new List<LikeDto>();
+            var likeDto = liked.AsQueryable();
 
-            if (predicate == "liked")
+            if (likesParams.Predicate == "liked")
             {
-                likes = likes.Where(like => like.SourceUserId == Id);
+                likes = likes.Where(like => like.SourceUserId == likesParams.Id);
                 missings = likes.Select(like => like.LikedMissing);
                 users = likes.Select(like => like.SourceUser);
 
-                likeDto = await missings.Select(missing => new LikeDto
+                likeDto = missings.Select(missing => new LikeDto
                 {
                     Id = missing.Id,
                     LikeByUsername = missing.AppUser.UserName,
@@ -51,10 +53,10 @@ namespace API.Data
                     Age = missing.DateOfBirth.CalculateAge(),
                     PhotoUrl = missing.Photos.FirstOrDefault(p => p.IsMain).Url
 
-                }).ToListAsync();
+                });
             }            
 
-            if (predicate == "likedBy")
+            if (likesParams.Predicate == "likedBy")
             {
                 var missingjoin = missings
                         .Join(likes, p => p.Id, pc => pc.LikedMissingId, (p, pc) => new { p, pc })
@@ -68,9 +70,9 @@ namespace API.Data
                             Firstname = ppc1.ppc.p.FirstName,
                             Age = ppc1.ppc.p.DateOfBirth.CalculateAge(),
                             PhotoUrl = ppc1.ppc.p.Photos.FirstOrDefault(p => p.IsMain).Url
-                        }).Where(u => u.LikedUserId == Id);
+                        }).Where(u => u.LikedUserId == likesParams.Id);
 
-                likeDto = await missingjoin.Select(missing => new LikeDto
+                likeDto = missingjoin.Select(missing => new LikeDto
                 {
                     Id = missing.MissingId,
                     LikeByUsername = missing.Username1,
@@ -80,9 +82,10 @@ namespace API.Data
                     Age = missing.Age,
                     PhotoUrl = missing.PhotoUrl
 
-                }).ToListAsync();
+                });
             }
-            return likeDto;
+            return await PagedList<LikeDto>.CreateAsync(likeDto.AsNoTracking(), 
+                likesParams.PageNumber, likesParams.PageSize);
         }
     }
 }

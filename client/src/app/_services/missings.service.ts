@@ -60,8 +60,10 @@ export class MissingsService {
     return this.http.post(this.baseUrl + 'likes/' + id, {});
   }
 
-  getLikes(predicate: string) {
-    return this.http.get<Partial<Missing[]>>(this.baseUrl + 'likes?predicate=' + predicate);
+  getLikes(predicate: string, pageNumber, pageSize) {
+    let params = this.getPaginationHeaders(pageNumber, pageSize);
+    params = params.append('predicate', predicate);
+    return this.getPaginatedResult<Partial<Missing[]>>(this.baseUrl + 'likes', params);
   }
 
   private getPaginatedResult<T>(url, params) {
