@@ -25,6 +25,7 @@ namespace API.Helpers
             CreateMap<RegisterDto, AppUser>();
             CreateMap<PostMissingDto, Missing>();
             CreateMap<Message, MessageDto>();
+            CreateMap<MessageDto, Message>();
         }
     }
 }
